@@ -67,15 +67,17 @@ const Folder = (props) => {
     const [modal, setModal] = React.useState(false);
     const { folders, deleteFolder,  renameFolder, pathHistory } = useContext(DriveContext);
 
+    const currentLocation = window.location.pathname;
+
     const onClickHandler = ({ id, name }) => {
       pathHistory({ id , name });
       props.history.push(`/folder/${id}`)
     }
 
     useEffect(() => {
-      let id = window.location.pathname.replace('/folder/', '');
+      let id = currentLocation.replace('/folder/', '');
       props.history.push(`/folder/${id}`)
-    }, [props.history, window.location.pathname])
+    }, [props.history, currentLocation])
 
     const deleteDocumentHandler = ({id}) => {
       deleteFolder(props.match.params.id, id);
