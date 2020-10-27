@@ -44,7 +44,7 @@ const Navigation = props => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [modal, setModal] = React.useState(false);
     const [text, setText] = useState('File');
-    const [name, setName] = useState("");
+    const [name, setName] = useState('');
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -73,12 +73,17 @@ const Navigation = props => {
 
     const addDocument = () => {
         const id = window.location.pathname.replace('/folder/', '');
-        createFolder({
-            id: uuidv4(),
-            name,
-            type: text.toLowerCase()
-        }, id)
-        handleModalClose()
+        console.log('----->', name);
+        if(name !== null && name !== undefined && name !== '') {
+            createFolder({
+                id: uuidv4(),
+                name,
+                type: text.toLowerCase()
+            }, id)
+            handleModalClose()
+        } else {
+            window.alert("Please enter file/folder name");
+        }
     }
 
     const open = Boolean(anchorEl);
@@ -111,6 +116,7 @@ const Navigation = props => {
                 <Button className={classes.button} onClick={() => handleOpen(1)}>Add File</Button>
                 <Button className={classes.button} onClick={() => handleOpen(2)}>Add Folder</Button>
                 <Modal
+                    required
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
@@ -126,7 +132,7 @@ const Navigation = props => {
                             <h2 id="transition-modal-title">{text}</h2>
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <TextField
-                                    value={name}
+                                    // value={name}
                                     required
                                     id="outlined-required"
                                     label="Required"

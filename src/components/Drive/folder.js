@@ -96,8 +96,12 @@ const Folder = (props) => {
     };
     
     const renameFolderHandler = ({ id }) => {
-      renameFolder(props.match.params.id, id, name);
-      handleModalClose();
+      if(name !== null && name !== undefined && name !== '') {
+        renameFolder(props.match.params.id, id, name);
+        handleModalClose();
+      } else {
+        window.alert('Please enter folder/file name');
+      }
     };
 
     const renderFiles = () => {
@@ -116,20 +120,22 @@ const Folder = (props) => {
         )
       }
 
-      return documents.map(document => {
+      return documents.map((document, index) => {
         if(document.type === "folder") {
           return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div className="folder_main" onClick={() => onClickHandler(document)} style={{
-                cursor: "pointer",
-                color: "red",
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center'}} > 
-                  <img className="file_icon" src={folderImg} alt="folder" width='100px' height="100px" />
-                  <p className="file_text" style={{marginLeft: '10px'}}>{document.name} </p>
-                  <div onClick={() => renderModals()} style={{ color: 'black', marginLeft: '10px' }}>{' '} <EditIcon /> {' '}</div>
-                  <div onClick={() => deleteDocumentHandler(document)} style={{ color: 'black', marginLeft: '10px' }}>{' '} <DeleteIcon />  {' '}</div>
+            <div style={{ display: "flex", flexDirection: "row" }} key={index}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div className="folder_main" onClick={() => onClickHandler(document)} style={{
+                  cursor: "pointer",
+                  color: "red",
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center'}} > 
+                    <img className="file_icon" src={folderImg} alt="folder" width='100px' height="100px" />
+                    <p className="file_text" style={{marginLeft: '10px'}}>{document.name} </p>
+                </div>
+                <div onClick={() => renderModals()} style={{ color: 'black', marginLeft: '10px' }}>{' '} <EditIcon /> {' '}</div>
+                <div onClick={() => deleteDocumentHandler(document)} style={{ color: 'black', marginLeft: '10px' }}>{' '} <DeleteIcon />  {' '}</div>
               </div>
               <Modal
                 aria-labelledby="transition-modal-title"
@@ -147,6 +153,7 @@ const Folder = (props) => {
                         <h2 id="transition-modal-title">Change Name</h2>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <TextField
+                                required
                                 value={name}
                                 required
                                 id="outlined-required"
@@ -170,7 +177,7 @@ const Folder = (props) => {
           );
         } else {
           return (
-            <div className="file_main" style={{ 
+            <div className="file_main" key={index} style={{ 
               display: 'flex', 
               flexDirection: 'row',
               alignItems: 'center', }}> 

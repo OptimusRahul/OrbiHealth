@@ -37,12 +37,16 @@ class Dashboard extends Component {
         this.props.history.push(`/folder/${id}`);
     }
 
+    componentDidMount() {
+        this.props.history.push(`/folder/${Object.keys(this.context.folders)[0]}`);
+    }
+
     renderBreadCrumbs = () => {
         return(
-            <Breadcrumbs>
+            <Breadcrumbs style={{ cursor: 'pointer' }}>
                 {this.context.path.map(({ name, id }, index) => {
                     return (
-                        <Link onClick={() => this.handleBreadCrumb(id, index)}>{name}</Link>
+                        <Link onClick={() => this.handleBreadCrumb(id, index)} key={index}>{name}</Link>
                     )
                 })}
             </Breadcrumbs>
