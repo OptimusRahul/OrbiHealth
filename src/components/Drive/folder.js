@@ -155,7 +155,6 @@ const Folder = (props) => {
                             <TextField
                                 required
                                 value={name}
-                                required
                                 id="outlined-required"
                                 label="Required"
                                 variant="outlined" 
