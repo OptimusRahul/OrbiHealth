@@ -1,0 +1,27 @@
+.folder_file_main{
+    display: flex;
+    flex-wrap: wrap;
+
+    .file_icon{
+       height: 50px;
+       width: 50px;
+    }
+
+    .file_text{
+        margin-top: 5px;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    .folder_main, .file_main{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 25%;
+        margin-bottom: 10px;
+        }
+
+    .folder_main{
+        cursor: pointer;
+    }
+}
