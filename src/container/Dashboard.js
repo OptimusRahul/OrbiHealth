@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { Breadcrumbs, Link } from '@material-ui/core';
 
 import Header from '../components/Header/Header';
@@ -32,6 +32,14 @@ class Dashboard extends Component {
 
     static contextType = DriveContext
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: false
+        }
+        // this.props.history.push(`/folder/${Object.keys(this.context.folders)[0]}`);
+    }
+
     handleBreadCrumb = (id, index) => {
         this.context.popHistory(index)
         this.props.history.push(`/folder/${id}`);
@@ -39,12 +47,17 @@ class Dashboard extends Component {
 
     componentDidMount() {
         this.props.history.push(`/folder/${Object.keys(this.context.folders)[0]}`);
+        this.setState({ id: true });
+    }
+
+    shouldComponentUpdate() {
+        return true;
     }
 
     renderBreadCrumbs = () => {
         return(
             <Breadcrumbs style={{ cursor: 'pointer' }}>
-                {this.context.path.map(({ name, id }, index) => {
+                { this.context.path && this.context.path.map(({ name, id }, index) => {
                     return (
                         <Link onClick={() => this.handleBreadCrumb(id, index)} key={index}>{name}</Link>
                     )
@@ -54,7 +67,7 @@ class Dashboard extends Component {
     }
 
     render() {
-         return (
+        return (
             <>
                 <div>
                     <Header />
@@ -72,6 +85,8 @@ class Dashboard extends Component {
                                 <Route path="/folder/:id">
                                     <Drive />
                                 </Route>
+                                <Route path="/folder/root" component={Drive} />
+                                <Redirect to="/folder/root"/>
                             </Switch>
                         </BrowserRouter>
                     </Grid>
@@ -82,4 +97,4 @@ class Dashboard extends Component {
 
 }
 
-export default withRouter(withStyles(useStyles)(Dashboard));
+export default withStyles(useStyles)(withRouter(Dashboard));

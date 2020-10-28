@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
-const DriveContext = React.createContext()
+const DriveContext = React.createContext(null)
 const myDrive = uuidv4();
+
 export class DriveProvider extends Component {
   // Context state
   constructor(props) {
     super(props);
     this.state = {
-      path: [{ id: myDrive, name: 'MyDrive' }],
+      path: [{ id: "root", name: 'MyDrive' }],
       folders: {
-        [myDrive]: []
+        ['root']: []
       }
     }
   }
@@ -20,7 +21,8 @@ export class DriveProvider extends Component {
   }
 
   popHistory = (index) => {
-    if(index+1 !== this.state.path.length) {
+    const a = this.state.path;
+    if(index+1 !== this.state?.path?.length) {
       let path = this.state.path.splice(0, index + 1);
       this.setState({ path })
     }

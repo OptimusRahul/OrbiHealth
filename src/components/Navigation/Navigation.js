@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navigation = props => {
+
     const context = useContext(DriveContext)
     const { createFolder } = context;
     const classes = useStyles();
@@ -73,7 +74,6 @@ const Navigation = props => {
 
     const addDocument = () => {
         const id = window.location.pathname.replace('/folder/', '');
-        console.log('----->', name);
         if(name !== null && name !== undefined && name !== '') {
             createFolder({
                 id: uuidv4(),
@@ -84,6 +84,7 @@ const Navigation = props => {
         } else {
             window.alert("Please enter file/folder name");
         }
+        setName('');
     }
 
     const open = Boolean(anchorEl);
@@ -132,7 +133,6 @@ const Navigation = props => {
                             <h2 id="transition-modal-title">{text}</h2>
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <TextField
-                                    // value={name}
                                     required
                                     id="outlined-required"
                                     label="Required"

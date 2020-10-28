@@ -30,12 +30,31 @@ class Drive extends Component {
     render() {
         const { match } = this.props;
         const { id } = match.params;
+        // const id = window.location.pathname.replace('/folder/', '')
         
         return (
-            <>
-                { this.context.folders[id] ? <Folder id={id}/> : null }
-            </>
-        );
+                    <>
+                        { this.context.folders[id] ? <Folder id={id}/> : null }
+                    </>
+                );
+        
+        // console.log(this.props.match);
+        // let id;
+        
+        // if(this.props.match) id = this.props.match.params.id;
+        // else id = '';
+        // //const id = window.location.pathname.replace('/folder/', '')
+        // console.log(this.context.path.id, this.context.folders, id);
+        // console.log(this.context.folders[id], this.props);
+        // if(id) {
+        //     return (
+        //         <>
+        //             { this.context.folders[id] ? <Folder id={id}/> : null }
+        //         </>
+        //     );
+        // } else {
+        //     return null;
+        // }
     }
 }
 

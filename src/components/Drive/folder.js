@@ -108,7 +108,7 @@ const Folder = (props) => {
       const {id} = props
       const documents = folders[id]
       
-      if(documents.length < 1)  {
+      if( documents && documents !== undefined && Object.keys(documents)?.length === 0)  {
         return (
             <div style={{ 
               display: 'flex', 
@@ -189,7 +189,6 @@ const Folder = (props) => {
     }
     
     return (
-
         <Card className={classes.root} style={{ margin: "10px", justifyContent: 'center' }}>
             <CardContent style={{ 
               display: 'flex', 
